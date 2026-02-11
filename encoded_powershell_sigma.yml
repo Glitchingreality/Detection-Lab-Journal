@@ -1,0 +1,22 @@
+title: Encoded PowerShell Execution
+id: b1e2f3a4-5678-90ab-cdef-1234567890ab
+description: Detects potentially malicious obfuscated PowerShell commands using Sysmon logs
+status: experimental
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection:
+        EventID: 1
+        Image|endswith: 'powershell.exe'
+        CommandLine|contains: '-enc'
+    condition: selection
+fields:
+    - CommandLine
+    - ParentImage
+    - User
+level: high
+tags:
+    - attack.execution
+    - attack.t1059.001
+    - lab-test
